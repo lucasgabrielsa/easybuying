@@ -1,0 +1,57 @@
+<html lang="pt-br" ng-app="easybuying">
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+		<script src="js/angular.js"></script>
+		<script src="js/ng-notify.min.js"></script>
+		<script src="js/app.js"></script>
+		<script src="js/service.js"></script>
+		<script src="js/categorycontroller.js"></script>
+		<script src="js/filtro-categoria.js"></script>
+		<script src="js/dialog-util.js"></script>
+		<script src="js/angular-messages.js"></script>
+	</head>
+	<body ng-controller="CategoriasCtrl">
+		<div class="col-md-6">
+			 <h3 ng-bind="titulo"></h3>
+			 <table class="table table-bordered table-striped">
+					 <thead>
+						 <tr>
+							 <th>Id</th>
+							 <th>Nome</th>
+							 <th>Tipo</th>
+							 <th>Editar</th>
+							 <th>Excluir</th>
+						</tr>
+					 </thead>
+					 </tbody>
+						 <tr ng-repeat='categorie in categories'>
+								 <td>{{categorie.id}}</td>
+								 <td>{{categorie.name}}</td>
+								 <td>{{categorie.typeCategory | formatCategoria}}</td>
+								 <td><button class="btn btn-primary" ng-click="editarCategoria(categorie)">Editar</button></td>
+								 <td><button class="btn btn-danger" ng-confirm-click="Are you sure to delete this record ?" confirmed-click="excluirCategoria(categorie)">Excluir</button></td>
+						 </tr>
+					 <tbody>
+			 </table>
+			 <div name="novaCategoria" ng-show="mostrarForm">
+				 <form name="formCategoria">
+				 	<input class="form-control" type="text" ng-model="categorie.name" name="nome" placeholder="Nome da Categoria" ng-minlength="5"/>
+				 	<select class="form-control" ng-model="categorie.typeCategory">
+				 		<option selected value="">Selecione um tipo</option>
+				 		<option value="PRODUTO">PRODUTO</option>
+				 		<option value="SERVICO">SERVIÇO</option>
+				 	</select><br />
+				 	<button class="btn btn-primary" ng-click="salvarCategoria(categorie)" ng-disabled="!categorie.name || !categorie.typeCategory">Salvar</button>
+				 	<button class="btn btn-danger" ng-click="cancelarAlteracao()">Cancelar</button>
+				 </form>
+			 </div>
+			 <div ng-messages="formCategoria.nome.$error" style="color:maroon" role="alert">
+			 		<div ng-message="minlength">Nome deve ter no mínimo 5 caracteres</div>
+		  </div>
+			 <br /><button class="btn btn-primary" ng-click="mostrarFormulario()">Nova</button>
+			 <br />
+	 </div>
+	</body>
+</html>
